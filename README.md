@@ -1,57 +1,57 @@
-![Logo Eagle](images/logo.jpg)
-# Security information and event management
-Eagle SIEM allows you to centralize, correlate and analyze logs in real time to detect and respond to security threats. It has agents for Linux and Windows, very customizable and adaptable to many situations. Its interface allows you to directly filter logs with SQL queries, save them and apply regex detection filters.
+![Logo d'eagle](img/logo.jpg)
+ 
+## Security information and event management
+Eagle SIEM allows you to centralize, correlate and analyze logs in real time to detect and respond to security threats. It has agents for Linux and Windows, very customizable and adaptable to many situations.
+Its interface allows you to directly filter logs with SQL queries, save them and apply regex detection filters.
 
-## Schéma architectural
-![Schéma architectural v2](images/schéma%20de%20concept%20architectural%20v2.png)
+## Installation
+### Server side
+#### Installation
+```
+git clone https://github.com/carambole25/Eagle-SIEM.git
+cd Eagle-SIEM/
+bash installation.sh
+```
+#### Ports
+```
+http://localhost:80    ui
+http://localhost:8080  indexer
+http://localhost:7777  phpmyadmin
+http://localhost:3306  mysql
+```
 
-## Architecture
-**Agents / Linux** : Daemon codé en Go
+### Agent
+Wget the agent zip file (display in the ui)
+```
+wget http://srv_ip/agent_linux.zip
+```
 
-**Agents / Windows** : Executable codé en Go lancé via le task scheduler
+Unzip it
+```
+unzip agent_linux.zip
+```
 
-**Modules Agents** : Go/Python/Autre
+- Get an api key from the ui and put it in the conf/api_key
 
-**Indexer** : Node.js et MySQL (Docker)
+- List files to monitor in file_to_monitore.lst
 
-**User Interface**: Python FastAPI + sqlite3 + Front-end en HTML/CSS/JS (Docker)
+- Choose a hostname for the agent in hostname.conf
 
-## Gestion des accès
-La BDD de l'indexer possède une table Tokens qui contient les tokens générés via l'interface utilisateur. L'indexer n'enregistre que les logs contenant un token valide dans leur requête.
+Launch the installation script :
+```
+bash installation_agent_linux.sh
+```
 
-La gestion des accès à l'interface utilisateur est gérée via sqlite3 par JWT signé.
+## Architecture v1
+![architecture v1 schema](img/architecture.png)
 
-## Exemple d'utilisation
-Un serveur Apache génère des logs dans des fichiers. L'agent vérifie toutes les 10 secondes ces fichiers et envoie à l'indexer les nouvelles lignes ainsi que le token agent.
-
-L'indexer vérifie le token agent et récupère le nom de la machine correspondante. Il enregistre les logs dans la base de données MySQL.
-
-Les logs peuvent être visionnés sur l'interface utilisateur.
-
-Ayant détecté une tentative d'attaque sur le serveur, on peut envoyer l'ordre au serveur de bloquer cette IP (en lui envoyant une commande à exécuter).
-
-## Fonctionnalités v2 du projet
-- [ ] Agents Linux : code de base (Récupérer les nouveaux logs à intervalles réguliers dans une liste de fichiers définie)
-- [ ] Agents Linux : code de base (Faire du programme un démon)
----
-- [ ] Agents Windows : code de base (Récupérer les nouveaux logs à intervalles réguliers dans une liste de fichiers définie)
-- [ ] Agents Windows : code de base (Script d'installation : compilation + planificateur de tâches)
-- [ ] Agents Windows : code de base (Automatiser l'installation dans le planificateur de tâches)
----
-- [ ] Indexer : code de base (Infrastructure Docker)
-- [ ] Indexer : code de base (Connexion à la BDD MySQL)
-- [ ] Indexer : code de base (Réception des logs)
-- [ ] Indexer : code de base (Vérification du token)
-- [ ] Indexer : code de base (Enregistrement des logs reçus dans la BDD si le token est valide)
----
-- [ ] Interface utilisateur : code de base (Infrastructure Docker)
-- [ ] Interface utilisateur : code de base (Connexion à la BDD SQLite3)
-- [ ] Interface utilisateur : code de base (Connexion)
-- [ ] Interface utilisateur : code de base (Création de compte)
-- [ ] Interface utilisateur : code de base (Connexion à la BDD MySQL de l'indexer)
-- [ ] Interface utilisateur : code de base (Création de token sur la BDD MySQL de l'indexer)
-- [ ] Interface utilisateur : code de base (Récupération des logs sur la BDD MySQL de l'indexer)
-- [ ] Interface utilisateur : code de base (UI minimale)
----
-- [ ] Modules Agents : adapter le code des modules existants dans la v1
-
+## ToDo for v2
+- [X] httpS for ui
+- [X] auth system for ui
+- [X] change the ui password in the ui
+- [X] update the installation script to not use sudo docker
+- [X] installation tutorial and powershell script for windows
+- [ ] make the ui less catastrophic
+- [ ] adding ids functionality for linux
+- [ ] adding ids functionality for windows
+- [ ] regex owasp module for http logs

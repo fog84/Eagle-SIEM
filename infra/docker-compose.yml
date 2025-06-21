@@ -1,0 +1,48 @@
+services:
+  db:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: changeme_rootpwd
+      MYSQL_DATABASE: eagle_db
+      MYSQL_USER: changeme_MYSQL_USER
+      MYSQL_PASSWORD: changeme_MYSQL_PASSWORD
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "3306:3306"
+    
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    restart: always
+    depends_on:
+      - db
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: changeme_rootpwd
+    ports:
+      - "7777:80"
+
+  php-indexer:
+    build:
+      context: .
+      dockerfile: Dockerfile_php_indexer
+    volumes:
+      - ./indexer/:/var/www/html
+      - ./indexer/log:/var/log/apache2
+    ports:
+      - 8080:80
+
+  php-ui:
+    build:
+      context: .
+      dockerfile: Dockerfile_php_ui
+    container_name: ui
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./ui/:/var/www/html
+      - ./ui/log:/var/log/apache2
