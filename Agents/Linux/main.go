@@ -11,9 +11,9 @@ import (
 	"time"
 )
 
-const TOKEN_PATH = "conf/token"
-const FILES_TO_MONITOR = "conf/files_to_monitor.lst"
-const LAST_LINE_READ_SAVES_PATH = "save_last_lines/last_lines_"
+const TOKEN_PATH = "/etc/eagle_agent/conf/token"
+const FILES_TO_MONITOR = "/etc/eagle_agent/conf/files_to_monitor.lst"
+const LAST_LINE_READ_SAVES_PATH = "/etc/eagle_agent/save_last_lines/last_lines_"
 const INDEXER_URL = "http://localhost:8080"
 
 func getToken() string {
@@ -33,8 +33,12 @@ func readNewLines(filesToMonitor []string) []string{
 	var newLinesFromAllFilesToMonitor []string
 
 	for _, file := range filesToMonitor {
-		lastLineReadSavePath := LAST_LINE_READ_SAVES_PATH + strings.ReplaceAll(file, "/", "_")
+		if file == "" {
+			continue
+		}
 		
+		lastLineReadSavePath := LAST_LINE_READ_SAVES_PATH + strings.ReplaceAll(file, "/", "_")
+
 		data, err := ioutil.ReadFile(lastLineReadSavePath)
 
 		var lastLineRead int
@@ -87,11 +91,19 @@ func sendNewLinesToDB(newLinesFromAllFilesToMonitor []string, token string) {
 
 func main() {
 	token := getToken()
-	filesToMonitor := getFilesToMonitor()
 
-	newLinesFromAllFilesToMonitor := readNewLines(filesToMonitor)
+	fmt.Println(token)
 
-	if len(newLinesFromAllFilesToMonitor) != 0 {
-		sendNewLinesToDB(newLinesFromAllFilesToMonitor, token)
+	for {
+		filesToMonitor := getFilesToMonitor()
+
+		newLinesFromAllFilesToMonitor := readNewLines(filesToMonitor)
+		fmt.Println(newLinesFromAllFilesToMonitor)
+	
+		if len(newLinesFromAllFilesToMonitor) != 0 {
+			sendNewLinesToDB(newLinesFromAllFilesToMonitor, token)
+		}
+
+		time.Sleep(10 * time.Second)
 	}
 }
