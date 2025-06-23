@@ -1,6 +1,7 @@
-mkdir /etc/eagle
-cp -r conf /etc/eagle_agent
-mkdir /etc/eagle/save_last_lines
+mkdir /etc/eagle_agent
+mkdir /etc/eagle/conf
+cp -r conf/ /etc/eagle_agent/conf
+mkdir /etc/eagle_agent/save_last_lines
 go build -o eagle_agent main.go
 cp eagle_agent /usr/local/bin
 cp eagle_agent.service /etc/systemd/system/
