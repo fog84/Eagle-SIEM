@@ -31,8 +31,8 @@ Les logs peuvent être visionnés sur l'interface utilisateur.
 Ayant détecté une tentative d'attaque sur le serveur, on peut envoyer l'ordre au serveur de bloquer cette IP (en lui envoyant une commande à exécuter).
 
 ## Fonctionnalités v2 du projet
-- [ ] Agents Linux : code de base (Récupérer les nouveaux logs à intervalles réguliers dans une liste de fichiers définie)
-- [ ] Agents Linux : code de base (Faire du programme un démon)
+- [X] Agents Linux : code de base (Récupérer les nouveaux logs à intervalles réguliers dans une liste de fichiers définie)
+- [X] Agents Linux : code de base (Faire du programme un démon)
 ---
 - [ ] Agents Windows : code de base (Récupérer les nouveaux logs à intervalles réguliers dans une liste de fichiers définie)
 - [ ] Agents Windows : code de base (Script d'installation : compilation + planificateur de tâches)
