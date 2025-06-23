@@ -16,16 +16,21 @@ const FILES_TO_MONITOR = "/etc/eagle_agent/conf/files_to_monitor.lst"
 const LAST_LINE_READ_SAVES_PATH = "/etc/eagle_agent/save_last_lines/last_lines_"
 const INDEXER_URL = "http://localhost:8080"
 
-func getToken() string {
-	data, err := ioutil.ReadFile(TOKEN_PATH)
-	if err != nil {
+func handleError(err error) {
+	if err != nil{
 		fmt.Println(err)
 	}
+}
+
+func getToken() string {
+	data, err := ioutil.ReadFile(TOKEN_PATH)
+	handleError(err)
 	return string(data)
 }
 
 func getFilesToMonitor() []string {
-	data, _ := ioutil.ReadFile(FILES_TO_MONITOR)
+	data, err := ioutil.ReadFile(FILES_TO_MONITOR)
+	handleError(err)
 	return strings.Split(string(data), "\n")
 }
 
@@ -45,20 +50,24 @@ func readNewLines(filesToMonitor []string) []string{
 		if err != nil {
 			lastLineRead = 0
 		} else {
-			lastLineRead, _ = strconv.Atoi(string(data))
+			lastLineRead, err = strconv.Atoi(string(data))
+			handleError(err)
 		}
-		lines, _ := ioutil.ReadFile(file)
+		lines, err := ioutil.ReadFile(file)
+		handleError(err)
 		newLines := strings.Split(string(lines), "\n")[lastLineRead:]
 		newLinesFromAllFilesToMonitor = append(newLinesFromAllFilesToMonitor, newLines...)
 
 
 		lastLineRead_current := lastLineRead + len(newLines)
 		if lastLineRead == 0 {
-			f, _ := os.Create(lastLineReadSavePath)
+			f, err := os.Create(lastLineReadSavePath)
+			handleError(err)
 			defer f.Close()
 			f.WriteString(strconv.Itoa(lastLineRead_current))
 		} else {
-			f, _ := os.OpenFile(lastLineReadSavePath, os.O_WRONLY|os.O_TRUNC, 0644)
+			f, err := os.OpenFile(lastLineReadSavePath, os.O_WRONLY|os.O_TRUNC, 0644)
+			handleError(err)
 			f.WriteString(strconv.Itoa(lastLineRead_current))
 		}
 	}
@@ -78,7 +87,8 @@ func sendNewLinesToDB(newLinesFromAllFilesToMonitor []string, token string) {
     method := "POST"
     payload := strings.NewReader(string(jsonData))
 
-    req, _ := http.NewRequest(method, INDEXER_URL, payload)
+    req, err := http.NewRequest(method, INDEXER_URL, payload)
+	handleError(err)
 	req.Header.Add("Content-Type", "application/json")
     req.Header.Add("Authorization", token)
 
