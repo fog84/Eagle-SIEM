@@ -1,0 +1,5 @@
+USE eagle_db;
+CREATE TABLE IF NOT EXISTS events (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    log TEXT
+);
