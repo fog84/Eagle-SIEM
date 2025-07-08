@@ -12,7 +12,7 @@ Eagle SIEM allows you to centralize, correlate and analyze logs in real time to 
 
 **Modules Agents** : Go/Python/Autre
 
-**Indexer** : Node.js et MySQL (Docker)
+**Indexer** : Python FastAPI et MySQL (Docker)
 
 **User Interface**: Python FastAPI + sqlite3 + Front-end en HTML/CSS/JS (Docker)
 
