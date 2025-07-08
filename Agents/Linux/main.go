@@ -14,7 +14,7 @@ import (
 const TOKEN_PATH = "/etc/eagle_agent/conf/token"
 const FILES_TO_MONITOR = "/etc/eagle_agent/conf/files_to_monitor.lst"
 const LAST_LINE_READ_SAVES_PATH = "/etc/eagle_agent/save_last_lines/last_lines_"
-const INDEXER_URL = "http://localhost:8080"
+const INDEXER_URL = "http://localhost:8000/events"
 
 func handleError(err error) {
 	if err != nil{

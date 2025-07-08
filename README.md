@@ -39,10 +39,10 @@ Ayant détecté une tentative d'attaque sur le serveur, on peut envoyer l'ordre 
 - [ ] Agents Windows : code de base (Automatiser l'installation dans le planificateur de tâches)
 ---
 - [ ] Indexer : code de base (Infrastructure Docker)
-- [ ] Indexer : code de base (Connexion à la BDD MySQL)
-- [ ] Indexer : code de base (Réception des logs)
-- [ ] Indexer : code de base (Vérification du token)
-- [ ] Indexer : code de base (Enregistrement des logs reçus dans la BDD si le token est valide)
+- [X] Indexer : code de base (Connexion à la BDD MySQL)
+- [X] Indexer : code de base (Réception des logs)
+- [X] Indexer : code de base (Vérification du token)
+- [X] Indexer : code de base (Enregistrement des logs reçus dans la BDD si le token est valide)
 ---
 - [ ] Interface utilisateur : code de base (Infrastructure Docker)
 - [ ] Interface utilisateur : code de base (Connexion à la BDD SQLite3)
