@@ -38,7 +38,7 @@ Ayant détecté une tentative d'attaque sur le serveur, on peut envoyer l'ordre 
 - [ ] Agents Windows : code de base (Script d'installation : compilation + planificateur de tâches)
 - [ ] Agents Windows : code de base (Automatiser l'installation dans le planificateur de tâches)
 ---
-- [ ] Indexer : code de base (Infrastructure Docker)
+- [X] Indexer : code de base (Infrastructure Docker)
 - [X] Indexer : code de base (Connexion à la BDD MySQL)
 - [X] Indexer : code de base (Réception des logs)
 - [X] Indexer : code de base (Vérification du token)
