@@ -11,7 +11,7 @@ services:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "3306:3306"
-    
+
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
     restart: always
@@ -22,3 +22,13 @@ services:
       MYSQL_ROOT_PASSWORD: supapwd4585_root
     ports:
       - "7777:80"
+
+  fastapi:
+    build: .
+    container_name: eagle-fastapi
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: mysql+pymysql://admin:supapwd4585@db:3306/eagle_db
+    ports:
+      - "8000:8000"

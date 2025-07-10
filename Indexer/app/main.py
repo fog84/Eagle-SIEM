@@ -2,7 +2,7 @@ from fastapi import FastAPI, Depends, Body, Header, HTTPException
 from sqlalchemy.orm import Session
 from sqlalchemy import text
 from pydantic import BaseModel
-from database import SessionLocal
+from app.database import SessionLocal
 
 app = FastAPI()
 
