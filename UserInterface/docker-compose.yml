@@ -1,0 +1,6 @@
+services:
+  user_interface:
+    build: .
+    container_name: eagle-ui
+    ports:
+      - "80:80"
