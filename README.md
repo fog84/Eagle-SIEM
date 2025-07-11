@@ -48,9 +48,8 @@ Ayant détecté une tentative d'attaque sur le serveur, on peut envoyer l'ordre 
 - [X] Interface utilisateur : code de base (Connexion à la BDD SQLite3)
 - [X] Interface utilisateur : code de base (Connexion)
 - [ ] Interface utilisateur : code de base (Création de compte)
-- [ ] Interface utilisateur : code de base (Connexion à la BDD MySQL de l'indexer)
 - [ ] Interface utilisateur : code de base (Création de token sur la BDD MySQL de l'indexer)
-- [ ] Interface utilisateur : code de base (Récupération des logs sur la BDD MySQL de l'indexer)
+- [En cours] Interface utilisateur : code de base (Récupération des logs de l'indexer)
 - [ ] Interface utilisateur : code de base (UI minimale)
 ---
 - [ ] Modules Agents : adapter le code des modules existants dans la v1
