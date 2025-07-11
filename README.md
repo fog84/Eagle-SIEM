@@ -44,9 +44,9 @@ Ayant détecté une tentative d'attaque sur le serveur, on peut envoyer l'ordre 
 - [X] Indexer : code de base (Vérification du token)
 - [X] Indexer : code de base (Enregistrement des logs reçus dans la BDD si le token est valide)
 ---
-- [ ] Interface utilisateur : code de base (Infrastructure Docker)
-- [ ] Interface utilisateur : code de base (Connexion à la BDD SQLite3)
-- [ ] Interface utilisateur : code de base (Connexion)
+- [X] Interface utilisateur : code de base (Infrastructure Docker)
+- [X] Interface utilisateur : code de base (Connexion à la BDD SQLite3)
+- [X] Interface utilisateur : code de base (Connexion)
 - [ ] Interface utilisateur : code de base (Création de compte)
 - [ ] Interface utilisateur : code de base (Connexion à la BDD MySQL de l'indexer)
 - [ ] Interface utilisateur : code de base (Création de token sur la BDD MySQL de l'indexer)
