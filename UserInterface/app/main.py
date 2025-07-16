@@ -33,6 +33,17 @@ def whoami(request: Request):
     token = request.cookies.get('token')
     return auth.get_username_from_jwt(token)
 
+@app.get("/save_indexer_api_key_readlogs_in_cookie")
+def save_indexer_api_key_readlogs_in_cookie(request: Request, api_key_readlogs: str, response: Response):
+    token = request.cookies.get('token')
+    username = auth.get_username_from_jwt(token)
+
+    if username is None:
+        raise HTTPException(status_code=401, detail="Unauthorized")
+    
+    response.set_cookie(key="indexer_api_key_readlogs", value=api_key_readlogs, httponly=False) # httponly would be better
+    return api_key_readlogs
+
 @app.post("/login")
 async def login(login_form: classes.LoginForm, response: Response):
     username = login_form.username

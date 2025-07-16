@@ -1,2 +1,39 @@
-toto
-# TODO request indexer logs
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<title>Logs</title>
+</head>
+<body>
+<table border="1" id="logsTable">
+<thead>
+<tr><th>id</th><th>log</th></tr>
+</thead>
+<tbody></tbody>
+</table>
+<script>
+function getCookie(name) {
+  const value = `; ${document.cookie}`
+  const parts = value.split(`; ${name}=`)
+  if (parts.length === 2) return parts.pop().split(';').shift()
+}
+const apiKey = getCookie('indexer_api_key_readlogs')
+
+fetch(`http://0.0.0.0:8000/events?api_key_readlogs=${apiKey}`)
+  .then(res => res.json())
+  .then(data => {
+    const tbody = document.querySelector('#logsTable tbody')
+    data.forEach(item => {
+      const tr = document.createElement('tr')
+      const tdId = document.createElement('td')
+      tdId.textContent = item.id
+      const tdLog = document.createElement('td')
+      tdLog.textContent = item.log
+      tr.appendChild(tdId)
+      tr.appendChild(tdLog)
+      tbody.appendChild(tr)
+    })
+  })
+</script>
+</body>
+</html>
