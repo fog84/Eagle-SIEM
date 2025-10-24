@@ -1,39 +1,298 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Logs</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0c0e1a;
+  --card:#101325;
+  --muted:#9da3b5;
+  --accent:#6366f1;
+  --accent-2:#3b82f6;
+  --glass:rgba(255,255,255,0.03);
+  --danger:#ff7b7b;
+  --radius:0;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+  background:
+    radial-gradient(900px 500px at 10% 10%, rgba(99,102,241,0.08), transparent 10%),
+    radial-gradient(700px 400px at 90% 90%, rgba(59,130,246,0.06), transparent 12%),
+    var(--bg);
+  color:#e7e9f0;
+  padding:28px;
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+  min-height:100vh;
+}
+.container{
+  width:100%;
+  max-width:1100px;
+}
+.header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  margin-bottom:18px;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.logo{
+  width:56px;
+  height:56px;
+  background:url("static/logo.png") center/cover no-repeat;
+  border-radius:0;
+}
+.title h1{
+  margin:0;
+  font-size:18px;
+  font-weight:700;
+}
+.title p{
+  margin:0;
+  color:var(--muted);
+  font-size:13px;
+}
+.controls{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+.input{
+  background:var(--glass);
+  border:1px solid rgba(255,255,255,0.05);
+  padding:8px 10px;
+  border-radius:0;
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+.input input{
+  background:transparent;
+  border:0;
+  outline:0;
+  color:inherit;
+  font-size:14px;
+  width:220px;
+}
+.card{
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  padding:16px;
+  box-shadow:0 6px 24px rgba(15,23,42,0.7);
+  border:1px solid rgba(255,255,255,0.04);
+  border-radius:0;
+}
+.table-wrap{
+  margin-top:12px;
+  overflow:auto;
+  border-top:1px solid rgba(255,255,255,0.03);
+  border-radius:0;
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:720px;
+  font-size:14px;
+}
+thead th{
+  text-align:left;
+  padding:12px 14px;
+  position:sticky;
+  top:0;
+  background:rgba(16,19,37,0.85);
+  font-weight:600;
+  color:#cfd6f5;
+  font-size:13px;
+}
+tbody td{
+  padding:12px 14px;
+  border-top:1px solid rgba(255,255,255,0.04);
+  vertical-align:top;
+  color:#dee4ff;
+}
+tbody tr:nth-child(even) td{
+  background:rgba(255,255,255,0.02);
+}
+.id-badge{
+  display:inline-block;
+  padding:6px 8px;
+  border-radius:0;
+  background:rgba(255,255,255,0.04);
+  color:var(--muted);
+  font-weight:600;
+  font-size:13px;
+}
+.log{
+  white-space:pre-wrap;
+  word-break:break-word;
+  line-height:1.45;
+  padding:8px;
+  border-radius:0;
+}
+.meta{
+  color:var(--muted);
+  font-size:13px;
+}
+.small{
+  font-size:12px;
+  color:var(--muted);
+}
+.loader{
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  border:2px solid rgba(255,255,255,0.08);
+  border-top-color:rgba(255,255,255,0.28);
+  animation:spin 1s linear infinite;
+  display:inline-block;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.empty{
+  padding:28px;
+  text-align:center;
+  color:var(--muted);
+  font-size:15px;
+}
+@media (max-width:720px){
+  .header{flex-direction:column;align-items:flex-start;gap:12px}
+  .input input{width:120px}
+  table{min-width:600px}
+}
+</style>
 </head>
 <body>
-<table border="1" id="logsTable">
-<thead>
-<tr><th>id</th><th>log</th></tr>
-</thead>
-<tbody></tbody>
-</table>
-<script>
-function getCookie(name) {
-  const value = `; ${document.cookie}`
-  const parts = value.split(`; ${name}=`)
-  if (parts.length === 2) return parts.pop().split(';').shift()
-}
-const apiKey = getCookie('indexer_api_key_readlogs')
+<div class="container">
+  <div class="header">
+    <div class="brand">
+      <div class="logo"></div>
+      <div class="title">
+        <h1>Eagle SIEM UI</h1>
+        <p>Flux d'événements récents</p>
+      </div>
+    </div>
+    <div class="controls">
+      <div class="input">
+        <input id="q" placeholder="Rechercher le texte d'un log..." aria-label="Rechercher les logs" />
+      </div>
+    </div>
+  </div>
 
-fetch(`http://0.0.0.0:8000/events?api_key_readlogs=${apiKey}`)
-  .then(res => res.json())
-  .then(data => {
-    const tbody = document.querySelector('#logsTable tbody')
-    data.forEach(item => {
-      const tr = document.createElement('tr')
-      const tdId = document.createElement('td')
-      tdId.textContent = item.id
-      const tdLog = document.createElement('td')
-      tdLog.textContent = item.log
-      tr.appendChild(tdId)
-      tr.appendChild(tdLog)
-      tbody.appendChild(tr)
-    })
-  })
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+      <div class="meta" id="status">Chargement des logs <span class="loader" id="loader"></span></div>
+      <div class="small" id="count">—</div>
+    </div>
+
+    <div class="table-wrap" id="tableWrap" role="region" aria-live="polite">
+      <table id="logsTable" aria-describedby="count">
+        <thead>
+          <tr><th style="width:120px">id</th><th>log</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div style="margin-top:12px;display:flex;justify-content:space-between;align-items:center">
+      <div class="small" id="lastUpdated">—</div>
+      <div class="small" id="errorMsg" style="color:var(--danger);display:none"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+function getCookie(name){
+  const v="; "+document.cookie;
+  const p=v.split("; "+name+"=");
+  if(p.length===2) return p.pop().split(";").shift();
+  return "";
+}
+const apiKey=getCookie('indexer_api_key_readlogs');
+const urlBase='http://0.0.0.0:8000/events';
+const qInput=document.getElementById('q');
+const tbody=document.querySelector('#logsTable tbody');
+const statusEl=document.getElementById('status');
+const loader=document.getElementById('loader');
+const countEl=document.getElementById('count');
+const lastUpdated=document.getElementById('lastUpdated');
+const errorMsg=document.getElementById('errorMsg');
+
+async function fetchLogs(){
+  errorMsg.style.display='none';
+  statusEl.textContent='Chargement des logs ';
+  statusEl.appendChild(loader);
+  tbody.innerHTML='';
+  countEl.textContent='—';
+  try{
+    const res=await fetch(`${urlBase}?api_key_readlogs=${encodeURIComponent(apiKey)}`,{cache:'no-store'});
+    if(!res.ok) throw new Error('Erreur réseau '+res.status);
+    const data=await res.json();
+    currentData=Array.isArray(data)?data:[];
+    renderLogs(currentData);
+    statusEl.textContent='Logs chargés';
+    const now=new Date();
+    lastUpdated.textContent='Mis à jour: '+now.toLocaleString();
+  }catch(e){
+    statusEl.textContent='Erreur';
+    errorMsg.style.display='block';
+    errorMsg.textContent=e.message || 'Impossible de charger';
+    lastUpdated.textContent='';
+  }
+}
+
+function renderLogs(list){
+  tbody.innerHTML='';
+  if(!list.length){
+    tbody.innerHTML='<tr><td colspan="2"><div class="empty">Aucun log trouvé</div></td></tr>';
+    countEl.textContent='0';
+    return;
+  }
+  const fragment=document.createDocumentFragment();
+  list.forEach(item=>{
+    const tr=document.createElement('tr');
+    const tdId=document.createElement('td');
+    const idSpan=document.createElement('span');
+    idSpan.className='id-badge';
+    idSpan.textContent=item.id ?? '';
+    tdId.appendChild(idSpan);
+    const tdLog=document.createElement('td');
+    const logDiv=document.createElement('div');
+    logDiv.className='log';
+    logDiv.textContent=String(item.log ?? '');
+    tdLog.appendChild(logDiv);
+    tr.appendChild(tdId);
+    tr.appendChild(tdLog);
+    fragment.appendChild(tr);
+  });
+  tbody.appendChild(fragment);
+  countEl.textContent=String(list.length);
+}
+
+let currentData=[];
+qInput.addEventListener('input',()=>{
+  const q=qInput.value.trim().toLowerCase();
+  if(!q){
+    renderLogs(currentData);
+    return;
+  }
+  const filtered=currentData.filter(it=>{
+    return String(it.id).toLowerCase().includes(q) || String(it.log).toLowerCase().includes(q);
+  });
+  renderLogs(filtered);
+});
+
+window.addEventListener('load', fetchLogs);
 </script>
 </body>
 </html>
