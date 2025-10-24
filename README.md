@@ -33,7 +33,7 @@ Les logs peuvent être visionnés sur l'interface utilisateur.
 ---
 - [ ] Interface utilisateur : Faciliter l'installation via un script shell qui va demander les mdp
 - [ ] Interface utilisateur : Crée un véritable flow d'utilisation
-- [-] Interface utilisateur : Code de base (Création de compte)
+- [ ] Interface utilisateur : Code de base (Création de compte)
 ---
 - [ ] Modules Agents : Adapter le code des modules existants dans la v1
 ---
