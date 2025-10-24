@@ -1,14 +1,12 @@
 ![Logo Eagle](images/logo.jpg)
 # Security information and event management
-Eagle SIEM allows you to centralize, correlate and analyze logs in real time to detect and respond to security threats. It has agents for Linux and Windows, very customizable and adaptable to many situations. Its interface allows you to directly filter logs with SQL queries, save them and apply regex detection filters.
+Eagle SIEM allows you to centralize, correlate and analyze logs in real time to detect and respond to security threats.
 
 ## Schéma architectural
 ![Schéma architectural v2](images/schéma%20de%20concept%20architectural%20v2.png)
 
 ## Architecture
 **Agents / Linux** : Daemon codé en Go
-
-**Agents / Windows** : Executable codé en Go lancé via le task scheduler
 
 **Modules Agents** : Go/Python/Autre
 
@@ -17,7 +15,7 @@ Eagle SIEM allows you to centralize, correlate and analyze logs in real time to 
 **User Interface**: Python FastAPI + sqlite3 + Front-end en HTML/CSS/JS (Docker)
 
 ## Gestion des accès
-La BDD de l'indexer possède une table Tokens qui contient les tokens générés via l'interface utilisateur. L'indexer n'enregistre que les logs contenant un token valide dans leur requête.
+L'Indexer autorise l'écriture et la lecture des logs sur la BDD via la vérifiaction des tokens correspondant (api_key, api_key_readlogs).
 
 La gestion des accès à l'interface utilisateur est gérée via sqlite3 par JWT signé.
 
@@ -28,15 +26,25 @@ L'indexer vérifie le token agent et récupère le nom de la machine corresponda
 
 Les logs peuvent être visionnés sur l'interface utilisateur.
 
-Ayant détecté une tentative d'attaque sur le serveur, on peut envoyer l'ordre au serveur de bloquer cette IP (en lui envoyant une commande à exécuter).
+## Fonctionnalités v2.2 du projet
+- [ ] Agents Linux :
+---
+- [ ] Indexer : Faciliter l'installation via un script shell qui va demander les mdp et généré les clé d'api
+---
+- [ ] Interface utilisateur : Faciliter l'installation via un script shell qui va demander les mdp
+- [ ] Interface utilisateur : Crée un véritable flow d'utilisation
+- [-] Interface utilisateur : Code de base (Création de compte)
+---
+- [ ] Modules Agents : Adapter le code des modules existants dans la v1
+---
+- [ ] Sécurité : Audit du code agent
+- [ ] Sécurité : Audit du code Indexer
+- [ ] Sécurité : Audit du code User Interface
 
-## Fonctionnalités v2 du projet
+
+## Fonctionnalités v2.1 du projet
 - [X] Agents Linux : code de base (Récupérer les nouveaux logs à intervalles réguliers dans une liste de fichiers définie)
 - [X] Agents Linux : code de base (Faire du programme un démon)
----
-- [ ] Agents Windows : code de base (Récupérer les nouveaux logs à intervalles réguliers dans une liste de fichiers définie)
-- [ ] Agents Windows : code de base (Script d'installation : compilation + planificateur de tâches)
-- [ ] Agents Windows : code de base (Automatiser l'installation dans le planificateur de tâches)
 ---
 - [X] Indexer : code de base (Infrastructure Docker)
 - [X] Indexer : code de base (Connexion à la BDD MySQL)
@@ -47,10 +55,7 @@ Ayant détecté une tentative d'attaque sur le serveur, on peut envoyer l'ordre 
 - [X] Interface utilisateur : code de base (Infrastructure Docker)
 - [X] Interface utilisateur : code de base (Connexion à la BDD SQLite3)
 - [X] Interface utilisateur : code de base (Connexion)
-- [-] Interface utilisateur : code de base (Création de compte)
-- [-] Interface utilisateur : code de base (Création de clé api (read/write) sur la BDD MySQL de l'indexer)
 - [X] Interface utilisateur : code de base (Récupération des logs de l'indexer)
 - [X] Interface utilisateur : code de base (UI minimale)
 ---
-- [ ] Modules Agents : adapter le code des modules existants dans la v1
 
