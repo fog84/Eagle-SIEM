@@ -26,10 +26,18 @@ L'indexer vérifie le token agent et récupère le nom de la machine corresponda
 
 Les logs peuvent être visionnés sur l'interface utilisateur.
 
+## Installation
+### Indexer
+```
+cd Indexer
+bash generate_env.sh
+docker compose up
+```
+
 ## Fonctionnalités v2.2 du projet
 - [ ] Agents Linux :
 ---
-- [ ] Indexer : Faciliter l'installation via un script shell qui va demander les mdp et généré les clé d'api
+- [X] Indexer : Faciliter l'installation via un script shell pour générer l'environement
 ---
 - [ ] Interface utilisateur : Faciliter l'installation via un script shell qui va demander les mdp
 - [ ] Interface utilisateur : Crée un véritable flow d'utilisation

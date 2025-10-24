@@ -12,6 +12,6 @@ CREATE TABLE IF NOT EXISTS api_key_readlogs (
     auth_key_readlogs TEXT
 );
 INSERT INTO api_key_readlogs (auth_key_readlogs) 
-VALUES ("WQvFhQ7sWh4SOXbC5feBSUCyhxQElmf90Mm6L07K");
+VALUES ("{DEFAULT_API_KEY_READ}");
 INSERT INTO api_key (auth_key) 
-VALUES ("a4z0CW4umcpDkdX31IMo6SQv+JXJUl1CgFeXmpCW")
+VALUES ("{DEFAULT_API_KEY_WRITE}")
