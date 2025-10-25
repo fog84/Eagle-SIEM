@@ -1,9 +1,10 @@
 import base64
 import hashlib
 import jwt
+import os
 
-SALT = b'7qauRuO3QGyJmiBDd9aUaw'
-SECRET = "ijz25f8z14s2fs5f95W6F58F5G8Q55df6q2fz448z"
+SALT = base64.b64decode(os.environ.get("SALT", ""))
+SECRET = os.environ.get("JWT_SECRET")
 algorithm = 'HS256'
 
 def hash_password(password):

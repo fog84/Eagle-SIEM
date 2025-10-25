@@ -33,13 +33,19 @@ cd Indexer
 bash generate_env.sh
 docker compose up
 ```
+### UserInterface
+```
+cd UserInterface
+bash generate_env.sh
+docker compose up
+```
 
 ## Fonctionnalités v2.2 du projet
 - [ ] Agents Linux :
 ---
 - [X] Indexer : Faciliter l'installation via un script shell pour générer l'environement
 ---
-- [ ] Interface utilisateur : Faciliter l'installation via un script shell qui va demander les mdp
+- [x] Interface utilisateur : Faciliter l'installation via un script shell pour générer l'environement
 - [ ] Interface utilisateur : Crée un véritable flow d'utilisation
 - [ ] Interface utilisateur : Code de base (Création de compte)
 ---
