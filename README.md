@@ -45,8 +45,11 @@ docker compose up
 ---
 - [X] Indexer : Faciliter l'installation via un script shell pour générer l'environement
 ---
-- [x] Interface utilisateur : Faciliter l'installation via un script shell pour générer l'environement
-- [ ] Interface utilisateur : Crée un véritable flow d'utilisation
+- [X] Interface utilisateur : Faciliter l'installation via un script shell pour générer l'environement
+- [X] Interface utilisateur : Style css login
+- [ ] Interface utilisateur : Ui pour la route save_indexer_api_key_readlogs_in_cookie
+- [ ] Interface utilisateur : CSS pour l'ui de la route save_indexer_api_key_readlogs_in_cookie
+- [ ] Interface utilisateur : Redirection / vers le login
 - [ ] Interface utilisateur : Code de base (Création de compte)
 ---
 - [ ] Modules Agents : Adapter le code des modules existants dans la v1
