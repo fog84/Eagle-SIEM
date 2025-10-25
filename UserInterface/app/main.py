@@ -28,6 +28,16 @@ def siem_ui(request: Request):
 
     return FileResponse(os.path.join(static_dir, "siem.html"))
 
+@app.get("/save_indexer_api_key_readlogs_ui")
+def siem_ui(request: Request):
+    token = request.cookies.get('token')
+    username = auth.get_username_from_jwt(token)
+
+    if username is None:
+        raise HTTPException(status_code=401, detail="Unauthorized")
+
+    return FileResponse(os.path.join(static_dir, "add_api_key_readlogs_in_cookie.html"))
+
 @app.get("/whoami")
 def whoami(request: Request):
     token = request.cookies.get('token')

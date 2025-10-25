@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Enregistrer la clé API</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0c0e1a;
+  --card:#101325;
+  --muted:#9da3b5;
+  --accent:#6366f1;
+  --accent-2:#3b82f6;
+  --radius:0;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--bg);
+  color:#e7e9f0;
+  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:100vh;
+}
+form{
+  background:var(--card);
+  border:1px solid rgba(255,255,255,0.05);
+  padding:32px 36px;
+  width:100%;
+  max-width:360px;
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  box-shadow:0 6px 24px rgba(15,23,42,0.7);
+  border-radius:var(--radius);
+}
+h2{
+  text-align:center;
+  font-weight:600;
+  margin-bottom:8px;
+  color:#cfd6f5;
+}
+label{
+  font-size:14px;
+  color:var(--muted);
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+input{
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.06);
+  color:#e7e9f0;
+  padding:10px;
+  font-size:14px;
+  border-radius:var(--radius);
+  outline:none;
+}
+input:focus{
+  border-color:var(--accent);
+}
+button{
+  background:linear-gradient(90deg,var(--accent),var(--accent-2));
+  border:0;
+  padding:10px;
+  color:#fff;
+  font-weight:600;
+  font-size:14px;
+  border-radius:var(--radius);
+  cursor:pointer;
+  transition:opacity 0.2s;
+}
+button:hover{opacity:0.9}
+.message{
+  text-align:center;
+  font-size:13px;
+  color:var(--muted);
+  margin-top:4px;
+  min-height:18px;
+}
+</style>
+</head>
+<body>
+  <form id="key-form">
+    <h2>Clé API Indexer</h2>
+    <label>Entrer la clé API de lecture :
+      <input type="text" name="api_key_readlogs" required>
+    </label>
+    <button type="submit">Enregistrer</button>
+    <div class="message" id="msg"></div>
+  </form>
+
+  <script>
+    const form=document.getElementById('key-form');
+    const msg=document.getElementById('msg');
+
+    form.addEventListener('submit',async e=>{
+      e.preventDefault();
+      msg.textContent='Enregistrement...';
+      const key=form.api_key_readlogs.value.trim();
+      try{
+        const res=await fetch(`/save_indexer_api_key_readlogs_in_cookie?api_key_readlogs=${encodeURIComponent(key)}`);
+        if(!res.ok) throw new Error('Erreur '+res.status);
+        const text=await res.text();
+        msg.textContent='Clé enregistrée avec succès';
+        setTimeout(()=>location.href='/siem_ui',1000);
+      }catch(err){
+        msg.textContent='X '+(err.message||'Erreur');
+      }
+    });
+  </script>
+</body>
+</html>
