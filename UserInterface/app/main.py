@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Response, Request, HTTPException
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from pathlib import Path
 import os
@@ -13,6 +13,10 @@ app = FastAPI()
 
 static_dir = os.path.join(os.path.dirname(__file__), "static")
 app.mount("/static", StaticFiles(directory=static_dir), name="static")
+
+@app.get("/")
+def redirect_login_ui():
+    return RedirectResponse(url="/login_ui")
 
 @app.get("/login_ui")
 def login_ui():
@@ -29,7 +33,7 @@ def siem_ui(request: Request):
     return FileResponse(os.path.join(static_dir, "siem.html"))
 
 @app.get("/save_indexer_api_key_readlogs_ui")
-def siem_ui(request: Request):
+def save_indexer_api_key_readlogs_ui(request: Request):
     token = request.cookies.get('token')
     username = auth.get_username_from_jwt(token)
 

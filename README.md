@@ -49,7 +49,7 @@ docker compose up
 - [X] Interface utilisateur : Style css login
 - [X] Interface utilisateur : Ui pour la route save_indexer_api_key_readlogs_in_cookie
 - [X] Interface utilisateur : CSS pour l'ui de la route save_indexer_api_key_readlogs_in_cookie
-- [ ] Interface utilisateur : Redirection / vers le login
+- [X] Interface utilisateur : Redirection / vers le login
 - [ ] Interface utilisateur : Code de base (Création de compte)
 ---
 - [ ] Modules Agents : Adapter le code des modules existants dans la v1
