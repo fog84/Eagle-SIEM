@@ -22,6 +22,16 @@ def redirect_login_ui():
 def login_ui():
     return FileResponse(os.path.join(static_dir, "login.html"))
 
+@app.get("/register_ui")
+def register_ui(request: Request):
+    token = request.cookies.get('token')
+    username = auth.get_username_from_jwt(token)
+
+    if username is None:
+        raise HTTPException(status_code=401, detail="Unauthorized")
+
+    return FileResponse(os.path.join(static_dir, "register.html"))
+
 @app.get("/siem_ui")
 def siem_ui(request: Request):
     token = request.cookies.get('token')
@@ -69,3 +79,17 @@ async def login(login_form: classes.LoginForm, response: Response):
         return "Connected"
     else:
         return "Bad password or username"
+
+@app.post("/create_new_account")
+async def register(request: Request, register_form: classes.RegisterForm, response: Response):
+    token = request.cookies.get('token')
+    username = auth.get_username_from_jwt(token)
+
+    if username is None:
+        raise HTTPException(status_code=401, detail="Unauthorized")
+
+    username = register_form.username
+    password = auth.hash_password(register_form.password)
+    bdd.cursor.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, password))
+    bdd.connexion_bdd.commit()
+    return "Account created"
